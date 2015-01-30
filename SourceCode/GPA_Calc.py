@@ -4,6 +4,7 @@
 import httplib
 import re
 import wx
+import sys
 
 #---------------------------------------------------------
 Ver = 'NKU GPA Calculator'
@@ -74,7 +75,8 @@ class AppFrame(wx.Frame):
 
 	def OnClose(self, event):
 		self.Destroy()
-		exit(0)
+		sys.exit(0)
+
 
 #---------------------------------------------------------
 class AppPanel(wx.Panel):
@@ -115,7 +117,7 @@ class AppPanel(wx.Panel):
 		self.val = wx.StaticBitmap(self, 9, bitmap = self.image.ConvertToBitmap())
 		self.val.SetPosition(wx.Point(89, 80))
 
-		self.version = wx.StaticText(self, 0, "@version 0.0.2", pos = (255, 200))
+		self.version = wx.StaticText(self, 0, "@version 0.0.2", pos = (255, 205))
 
 	def CalcPanel(self):
 		self.preset = wx.RadioBox(self, 20, label = "", pos = (15,135),

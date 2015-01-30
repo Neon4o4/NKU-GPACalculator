@@ -5,7 +5,18 @@ NKU GPACalculator
 
 源代码以及可执行文件奉上=,=
 
-源代码执行需要：Python2.7, wxPython3.0.2.0 （其他版本没有测试）
+上面的两个压缩包是 Mac 和 Windows 的可执行文件
+
+如果 Github 太慢，可以使用这个也很慢的备用地址：（如果你可以访问 IPv6 的话，推荐使用 IPv6）
+IPv4：[Windows](http://www.clatter.cn/proj/nkucdn/NKU-GPACalculator-Win.rar) [Mac](http://www.clatter.cn/proj/nkucdn/NKU-GPACalculator-OSX.zip)
+
+IPv6：[Windows](http://ipv6.clatter.cn/proj/nkucdn/NKU-GPACalculator-Win.rar) [Mac](http://ipv6.clatter.cn/proj/nkucdn/NKU-GPACalculator-OSX.zip)
+
+ForDeveloper 目录下有打包需要的 setup 文件
+
+源代码执行需要：Python2.7, wxPython3.0.2.0 （不代表其他版本不可以执行，只是我没有测试）
+
+以及非常抱歉由于这次用 wxPython 做了界面，在 Windows 和 Mac 下的源代码有一点点不一样。但是所有的差别都是在界面布局上的，所以并不需要特别担心。
 
 反馈
 =======
