@@ -25,7 +25,7 @@ Preset = ['ABC', 'BCD', 'FC,FD', u'全部', u'自定义']
 ScoreList = {
 'A':[], 'B':[], 'C':[], 'D':[], 'E':[], 'FC':[], 'FD':[]
 }
-
+LoginPanelWidget = []
 #---------------------------------------------------------
 def INIT():
 	global Login
@@ -87,12 +87,12 @@ class AppPanel(wx.Panel):
 			self.LoginPanel()
 
 	def LoginPanel(self):
-		label_id = wx.StaticText(self, 1, u"学号:")
-		label_id.SetPosition(wx.Point(85, 15))
-		label_psw = wx.StaticText(self, 2, u"密码:")
-		label_psw.SetPosition(wx.Point(85, 50))
-		label_val = wx.StaticText(self, 3, u"验证码:")
-		label_val.SetPosition(wx.Point(85, 115))
+		self.label_id = wx.StaticText(self, 1, u"学号:")
+		self.label_id.SetPosition(wx.Point(85, 15))
+		self.label_psw = wx.StaticText(self, 2, u"密码:")
+		self.label_psw.SetPosition(wx.Point(85, 50))
+		self.label_val = wx.StaticText(self, 3, u"验证码:")
+		self.label_val.SetPosition(wx.Point(85, 115))
 
 		self.text_id = wx.TextCtrl(self, 4)
 		self.text_id.SetPosition(wx.Point(140, 15))
@@ -110,13 +110,12 @@ class AppPanel(wx.Panel):
 
 		self.error_text = wx.StaticText(self, 8, "", style= wx.ALIGN_CENTER)
 		self.error_text.SetPosition(wx.Point(95, 175))
-		#self.error_text.SetLabel('lable')
 
 		self.image = wx.Image("ValidateCode.jpg", wx.BITMAP_TYPE_JPEG)
 		self.val = wx.StaticBitmap(self, 9, bitmap = self.image.ConvertToBitmap())
 		self.val.SetPosition(wx.Point(89, 80))
 
-		self.auth = wx.StaticText(self, 0, "@version 0.0.1", pos = (255, 200))
+		self.version = wx.StaticText(self, 0, "@version 0.0.2", pos = (255, 200))
 
 	def CalcPanel(self):
 		self.preset = wx.RadioBox(self, 20, label = "", pos = (15,135),
@@ -279,6 +278,8 @@ class AppPanel(wx.Panel):
 			self.err_code = u"验证码错误！"
 			self.text_val.SetValue('')
 			if INIT():
+				self.image.Destroy()
+				self.val.Destroy()
 				self.image = wx.Image("ValidateCode.jpg", wx.BITMAP_TYPE_JPEG)
 				self.val = wx.StaticBitmap(self, 9, bitmap = self.image.ConvertToBitmap())
 				self.val.SetPosition(wx.Point(89, 80))
@@ -296,28 +297,34 @@ class AppPanel(wx.Panel):
 		if not Login:
 			self.error_text.SetLabel(unicode(self.err_code))
 			return
-		self.getScore()
-		self.Destroy()
-		application.showCalc()
 
-#---------------------------------------------------------
-class Application(AppFrame):
-	def __init__(self):
-		self.frame = AppFrame()
-	def showCalc(self):
-		self.frame = AppFrame(calc = True)
-		#global frame
-		#frame = self.frame
+		self.error_text.SetLabel(u'正在获取成绩...')
+		self.getScore()
+		self.GatherLoginWidget()
+		self.Switch2CalcPanel()
+
+	def GatherLoginWidget(self):
+		LoginPanelWidget.append(self.label_id)
+		LoginPanelWidget.append(self.label_psw)
+		LoginPanelWidget.append(self.label_val)
+		LoginPanelWidget.append(self.text_id)
+		LoginPanelWidget.append(self.text_psw)
+		LoginPanelWidget.append(self.text_val)
+		LoginPanelWidget.append(self.confirm)
+		LoginPanelWidget.append(self.error_text)
+		LoginPanelWidget.append(self.val)
+		LoginPanelWidget.append(self.version)
+
+	def Switch2CalcPanel(self):
+		for widget in LoginPanelWidget:
+			widget.Hide()
+		self.CalcPanel()
 
 #---------------------------------------------------------
 if __name__ == "__main__":
-	global app
-	global frame
-	global application
 	INIT()
-	app = wx.App(False)
-	application = Application()
-	frame = application.frame
+	app = wx.App()
+	frame = AppFrame()
 	app.MainLoop()
 
 #---------------------------------------------------------
