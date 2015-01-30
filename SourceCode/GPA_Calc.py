@@ -5,6 +5,8 @@ import httplib
 import re
 import wx
 import sys
+import os
+import platform
 
 #---------------------------------------------------------
 Ver = 'NKU GPA Calculator'
@@ -27,6 +29,13 @@ ScoreList = {
 'A':[], 'B':[], 'C':[], 'D':[], 'E':[], 'FC':[], 'FD':[]
 }
 LoginPanelWidget = []
+if getattr(sys, 'frozen', False):
+	LocPath = os.path.dirname(sys.executable)+"/"
+elif __file__:
+	LocPath = os.path.dirname(__file__)+"/"
+else:
+	print "Find Path Error"
+isWindows = (platform.platform().upper()[:7]=="WINDOWS")
 #---------------------------------------------------------
 def INIT():
 	global Login
@@ -45,7 +54,7 @@ def INIT():
 			conn=httplib.HTTPConnection("222.30.32.10",timeout=20)
 			conn.request("GET","http://222.30.32.10/ValidateCode","",HEADERS)
 			res=conn.getresponse()
-			f=open("ValidateCode.jpg","w+b")
+			f=open(LocPath+"ValidateCode.jpg","w+b")
 			f.write(res.read())
 			f.close()
 			conn.close()
@@ -67,7 +76,7 @@ def CheckSystemStatus():
 #---------------------------------------------------------
 class AppFrame(wx.Frame):
 	def __init__(self, calc = False):
-		wx.Frame.__init__(self, parent = None, title = Ver, size = (353, 250))
+		wx.Frame.__init__(self, parent = None, title = Ver, size = (360, 265))
 		self.fSizer = wx.BoxSizer(wx.VERTICAL)
 		self.panel = AppPanel(self, calc)
 		self.Bind(wx.EVT_CLOSE, self.OnClose, self)
@@ -113,11 +122,28 @@ class AppPanel(wx.Panel):
 		self.error_text = wx.StaticText(self, 8, "", style= wx.ALIGN_CENTER)
 		self.error_text.SetPosition(wx.Point(95, 175))
 
-		self.image = wx.Image("ValidateCode.jpg", wx.BITMAP_TYPE_JPEG)
+		self.image = wx.Image(LocPath+"ValidateCode.jpg", wx.BITMAP_TYPE_JPEG)
 		self.val = wx.StaticBitmap(self, 9, bitmap = self.image.ConvertToBitmap())
 		self.val.SetPosition(wx.Point(89, 80))
 
 		self.version = wx.StaticText(self, 0, "@version 0.0.2", pos = (255, 205))
+		
+	def OutPut(self, event):
+		f = open(LocPath + "Your_Score.txt","w")
+		for i in sorted(ScoreList.keys()):
+			for j in ScoreList[i]:
+				f.writelines(("%s\t"*3)%(j['name'],j['credit'],j['score'])+"\n")
+		f.close()
+		if isWindows:
+			#print unicode(LocPath.decode("GBK"))
+			#print u"成绩清单已被导出到\n"+LocPath + u"Your_Score.txt"+u"\n是否打开？"
+			dlg = wx.MessageBox( u"成绩清单已被导出到\n"+unicode(LocPath.decode("GBK")) + u"Your_Score.txt"+u"\n是否打开？",u'导出完成', wx.YES_NO |wx.ICON_INFORMATION | wx.STAY_ON_TOP) 
+			if dlg == wx.YES:
+				os.startfile(LocPath + "Your_Score.txt")
+			else:
+				pass
+		else:
+			dlg = wx.MessageBox( u"成绩清单已被导出到\n"+LocPath + u"Your_Score.txt",u'导出完成', wx.YES |wx.ICON_INFORMATION | wx.STAY_ON_TOP) 
 
 	def CalcPanel(self):
 		self.preset = wx.RadioBox(self, 20, label = "", pos = (15,135),
@@ -131,6 +157,11 @@ class AppPanel(wx.Panel):
 		self.E = wx.CheckBox(self, 15, label = u"E类", pos = (235,170))
 		self.FC = wx.CheckBox(self, 16, label = "FC", pos = (285,145))
 		self.FD = wx.CheckBox(self, 17, label = "FD", pos = (285,170))
+		#=====================
+		self.confirm = wx.Button(self, 21, label = u"导出")
+		self.confirm.SetPosition(wx.Point(240, 190))
+		self.Bind(wx.EVT_BUTTON, self.OutPut)
+		#=====================
 		self.CourseType = [self.A, self.B, self.C, self.D, self.E, self.FC, self.FD]
 		self.EnableCourseType(False)
 
@@ -211,7 +242,7 @@ class AppPanel(wx.Panel):
 												#下标0-7依次：序号 课程代码 名称 类型 成绩 学分 重修成绩 重修情况
 				if cc[4] == '通过':
 					#ScoreList[cc[3]].append({'score':80,'credit':1})
-					pass_list.append({'score':0, 'credit':float(cc[5]), 'type':cc[3]})
+					pass_list.append({'score':0, 'credit':float(cc[5]), 'type':cc[3], 'name':cc[2]})
 					continue
 				c = {'score':0,'credit':0}
 				if cc[6] == '':	#无重修 cc[6] : 重修成绩
@@ -219,6 +250,7 @@ class AppPanel(wx.Panel):
 				else:
 					c['score'] = float(cc[6])
 				c['credit'] = float(cc[5])
+				c['name'] = cc[2]
 				ScoreList[cc[3]].append(c)	#cc[3] 课程类型
 			if len(pass_list) == 1 and pass_list[0]['type'] == 'C':
 				pass_list = pass_list[0]
@@ -282,7 +314,7 @@ class AppPanel(wx.Panel):
 			if INIT():
 				self.image.Destroy()
 				self.val.Destroy()
-				self.image = wx.Image("ValidateCode.jpg", wx.BITMAP_TYPE_JPEG)
+				self.image = wx.Image(LocPath+"ValidateCode.jpg", wx.BITMAP_TYPE_JPEG)
 				self.val = wx.StaticBitmap(self, 9, bitmap = self.image.ConvertToBitmap())
 				self.val.SetPosition(wx.Point(89, 80))
 			else:
