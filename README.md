@@ -30,6 +30,8 @@ ForDeveloper 目录下有打包需要的 setup 文件
 
 反馈
 =======
-邮箱：baiyinshuo(at)clatter.cn
+邮箱：[baiyinshuo@clatter.cn](mailto:baiyinshuo@clatter.cn)
+
+某喵：[bug@nkucodingcat.com](mailto:bug@nkucodingcat.com)
 
 #End Of Readme
