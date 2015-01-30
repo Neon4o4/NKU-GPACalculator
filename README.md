@@ -26,6 +26,5 @@ ForDeveloper 目录下有打包需要的 setup 文件
 反馈
 =======
 邮箱：baiyinshuo(at)clatter.cn
-（或者你可以通过其他方式联系到我也可以）
 
 #End Of Readme
