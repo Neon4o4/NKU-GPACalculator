@@ -5,9 +5,14 @@ NKU GPACalculator
 
 源代码以及可执行文件奉上=,=
 
-上面的两个压缩包是 Mac 和 Windows 的可执行文件
+两个压缩包是 Mac 和 Windows 的可执行文件
+
+可执行文件下载（GitHub）：
+
+[Windows](https://raw.githubusercontent.com/Neon4o4/NKU-GPACalculator/master/NKU-GPACalculator-Win.rar) [Mac](https://raw.githubusercontent.com/Neon4o4/NKU-GPACalculator/master/NKU-GPACalculator-OSX.zip)
 
 如果 Github 太慢，可以使用这个也很慢的备用地址：（如果你可以访问 IPv6 的话，推荐使用 IPv6）
+
 IPv4：[Windows](http://www.clatter.cn/proj/nkucdn/NKU-GPACalculator-Win.rar) [Mac](http://www.clatter.cn/proj/nkucdn/NKU-GPACalculator-OSX.zip)
 
 IPv6：[Windows](http://ipv6.clatter.cn/proj/nkucdn/NKU-GPACalculator-Win.rar) [Mac](http://ipv6.clatter.cn/proj/nkucdn/NKU-GPACalculator-OSX.zip)
