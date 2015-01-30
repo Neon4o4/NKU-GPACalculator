@@ -7,7 +7,7 @@ NKU GPACalculator
 
 可执行文件下载（GitHub）：
 
-[Windows](https://raw.githubusercontent.com/Neon4o4/NKU-GPACalculator/master/NKU-GPACalculator-Win.rar) [Mac](https://raw.githubusercontent.com/Neon4o4/NKU-GPACalculator/master/NKU-GPACalculator-OSX.zip)
+[Release 页面](https://github.com/Neon4o4/NKU-GPACalculator/releases)
 
 如果 Github 太慢，可以使用这个也很慢的备用地址：（如果你可以访问 IPv6 的话，推荐使用 IPv6）
 
