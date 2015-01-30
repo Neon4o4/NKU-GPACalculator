@@ -126,9 +126,12 @@ class AppPanel(wx.Panel):
 		self.val = wx.StaticBitmap(self, 9, bitmap = self.image.ConvertToBitmap())
 		self.val.SetPosition(wx.Point(89, 80))
 
-		self.version = wx.StaticText(self, 0, "@version 0.0.2", pos = (255, 205))
-		
+		self.version = wx.StaticText(self, 0, "@version 0.0.3", pos = (255, 205))
+
 	def OutPut(self, event):
+		global LocPath
+		if not isWindows:
+			LocPath = re.sub('[^/]+?/Contents/MacOS/', '', LocPath)
 		f = open(LocPath + "Your_Score.txt","w")
 		for i in sorted(ScoreList.keys()):
 			for j in ScoreList[i]:
@@ -137,13 +140,13 @@ class AppPanel(wx.Panel):
 		if isWindows:
 			#print unicode(LocPath.decode("GBK"))
 			#print u"成绩清单已被导出到\n"+LocPath + u"Your_Score.txt"+u"\n是否打开？"
-			dlg = wx.MessageBox( u"成绩清单已被导出到\n"+unicode(LocPath.decode("GBK")) + u"Your_Score.txt"+u"\n是否打开？",u'导出完成', wx.YES_NO |wx.ICON_INFORMATION | wx.STAY_ON_TOP) 
+			dlg = wx.MessageBox( u"成绩清单已被导出到\n"+unicode(LocPath.decode("GBK")) + u"Your_Score.txt"+u"\n是否打开？",u'导出完成', wx.YES_NO |wx.ICON_INFORMATION | wx.STAY_ON_TOP)
 			if dlg == wx.YES:
 				os.startfile(LocPath + "Your_Score.txt")
 			else:
 				pass
 		else:
-			dlg = wx.MessageBox( u"成绩清单已被导出到\n"+LocPath + u"Your_Score.txt",u'导出完成', wx.YES |wx.ICON_INFORMATION | wx.STAY_ON_TOP) 
+			dlg = wx.MessageBox( u"成绩清单已被导出到\n"+unicode(LocPath) + u"Your_Score.txt",u'导出完成', wx.ICON_INFORMATION | wx.STAY_ON_TOP)
 
 	def CalcPanel(self):
 		self.preset = wx.RadioBox(self, 20, label = "", pos = (15,135),

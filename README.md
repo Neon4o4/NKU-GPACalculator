@@ -5,8 +5,6 @@ NKU GPACalculator
 
 源代码以及可执行文件奉上=,=
 
-两个压缩包是 Mac 和 Windows 的可执行文件
-
 可执行文件下载（GitHub）：
 
 [Windows](https://raw.githubusercontent.com/Neon4o4/NKU-GPACalculator/master/NKU-GPACalculator-Win.rar) [Mac](https://raw.githubusercontent.com/Neon4o4/NKU-GPACalculator/master/NKU-GPACalculator-OSX.zip)
