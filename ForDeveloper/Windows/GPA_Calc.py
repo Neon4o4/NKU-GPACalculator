@@ -29,12 +29,7 @@ ScoreList = {
 'A':[], 'B':[], 'C':[], 'D':[], 'E':[], 'FC':[], 'FD':[]
 }
 LoginPanelWidget = []
-if getattr(sys, 'frozen', False):
-	LocPath = os.path.dirname(sys.executable)+"/"
-elif __file__:
-	LocPath = os.path.dirname(__file__)+"/"
-else:
-	print "Find Path Error"
+LocPath = os.getcwd() + '/'
 isWindows = (platform.platform().upper()[:7]=="WINDOWS")
 #---------------------------------------------------------
 def INIT():
